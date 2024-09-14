@@ -1,0 +1,11 @@
+1. prompt engineering to figure out how to best create an argument
+
+- what kind of strategies do we want the bot to use? personalities?
+- should we use a finetuned LLM?
+
+2. decide the form factor and build it out
+
+- mobile app? website?
+- chrome extension? read ig dms
+
+3. add document/reference searching (if time/optional)

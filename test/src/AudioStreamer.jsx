@@ -1,14 +1,20 @@
 // src/AudioStreamer.js
 import React, { useState, useRef } from "react";
+import env from "react-dotenv";
 
 const AudioStreamer = () => {
   const [isRecording, setIsRecording] = useState(false);
+  const [data, setData] = useState(null);
   const mediaRecorderRef = useRef(null);
   const socketRef = useRef(null);
 
   const startStreaming = () => {
+    console.log(env);
     // Open a WebSocket connection
-    socketRef.current = new WebSocket("ws://localhost:8765");
+    socketRef.current = new WebSocket("wss://api.deepgram.com/v1/listen", [
+      "token",
+      "c268818ea28c1ac34c20a131e4a5ca270b81dba2",
+    ]);
 
     socketRef.current.onopen = () => {
       console.log("WebSocket connection established");
@@ -22,8 +28,10 @@ const AudioStreamer = () => {
       console.log("WebSocket connection closed");
     };
 
-    socketRef.current.onmessage = (event) => {
-      console.log("Message from server ", event.data);
+    socketRef.current.onmessage = (message) => {
+      const received = JSON.parse(message.data);
+      const transcript = received.channel.alternatives[0].transcript;
+      console.log("Message from server ", JSON.parse(message.data));
     };
   };
 
@@ -39,23 +47,8 @@ const AudioStreamer = () => {
       if (
         event.data.size > 0 &&
         socketRef.current.readyState === WebSocket.OPEN
-      ) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64Text = reader.result.split(",")[1];
-          const data = {
-            id: 2,
-            name: 2,
-            data: base64Text,
-          };
-
-          socketRef.current.send(JSON.stringify(data)); // Send audio data to backend
-          console.log(JSON.stringify(data));
-          console.log("Base64 text:", base64Text);
-          // Do something with the base64 text
-        };
-        reader.readAsDataURL(event.data);
-      }
+      )
+        socketRef.current.send(event.data); // Send audio data to backend
     };
 
     mediaRecorderRef.current.start(500); // Start recording audio in 500ms chunks
@@ -91,6 +84,7 @@ const AudioStreamer = () => {
       <button onClick={stopRecording} disabled={!isRecording}>
         Stop Streaming
       </button>
+      <audio src=""></audio>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import asyncio
 import websockets
 import json
+import base64
 
 async def handle_connection(websocket, path):
 	async for message in websocket:
@@ -13,6 +14,12 @@ async def handle_connection(websocket, path):
 		}
 		'''
 		decode_message = json.loads(message)
+		wav_file = open("temp.wav", "wb")
+		decode_string = base64.b64decode(decode_message["data"])
+		print(decode_string)
+		
+		wav_file.write(decode_string)
+		wav_file.close()
 
 		# transcribe the message
 

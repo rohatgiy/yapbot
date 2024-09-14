@@ -45,7 +45,7 @@ const AudioStreamer = () => {
           const base64Text = reader.result.split(",")[1];
           const data = {
             id: 2,
-            name: 2,
+            speaker: 2,
             data: base64Text,
           };
 

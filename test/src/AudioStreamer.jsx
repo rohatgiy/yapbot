@@ -11,10 +11,10 @@ const AudioStreamer = () => {
   const startStreaming = () => {
     console.log(env);
     // Open a WebSocket connection
-    socketRef.current = new WebSocket("wss://api.deepgram.com/v1/listen", [
-      "token",
-      "c268818ea28c1ac34c20a131e4a5ca270b81dba2",
-    ]);
+    socketRef.current = new WebSocket(
+      "wss://api.deepgram.com/v1/listen?punctuate=true&smart_format=true",
+      ["token", "c268818ea28c1ac34c20a131e4a5ca270b81dba2"]
+    );
 
     socketRef.current.onopen = () => {
       console.log("WebSocket connection established");

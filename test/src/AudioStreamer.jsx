@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { MessageContext } from "./App";
 
 const AudioStreamer = ({idRef}) => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
   const socketRef = useRef(null);
   console.log('idRef', idRef);
+  const { addMessage, toggleMyTurn, myTurn } = useContext(MessageContext);
 
   const startStreaming = () => {
     // Open a WebSocket connection
@@ -34,6 +36,7 @@ const AudioStreamer = ({idRef}) => {
 				'Access-Control-Allow-Origin': '*',
 			},
 		});
+    toggleMyTurn();
       console.log("WebSocket connection closed");
     };
 
@@ -45,6 +48,8 @@ const AudioStreamer = ({idRef}) => {
 		return;
 	  }
       const transcript = received.channel.alternatives[0].transcript;
+      if (!transcript) return;
+      addMessage({ sender: myTurn ? 'user' : 'opp', text: transcript });
 		await fetch(`${import.meta.env.VITE_SERVER_URL}/conversation/${idRef.current}`, {
 			method: 'PUT',
 			body: JSON.stringify({ message: transcript }),

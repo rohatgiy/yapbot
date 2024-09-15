@@ -1,17 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import AudioStreamer from "./AudioStreamer";
+import Footer from "./Footer";
+import Chat from "./Chat";
+import Navbar from "./Navbar.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <AudioStreamer />
-    </>
-  );
+return (
+	<div className="flex flex-col h-screen">
+		<Navbar />
+		<Chat messages={[{sender: 'Yash', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'user', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'Yash', text: 'hi' }]}/>
+		<Footer />
+	</div>
+);
 }
 
 export default App;

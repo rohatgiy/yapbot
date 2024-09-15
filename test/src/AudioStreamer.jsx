@@ -77,11 +77,10 @@ const AudioStreamer = () => {
 
   return (
     <div>
-      <h1>Stream Audio</h1>
-      <button onClick={handleStart} disabled={isRecording}>
+      <button className="bg-mustard p-5 rounded-lg text-white" onClick={handleStart} disabled={isRecording}>
         Start Streaming
       </button>
-      <button onClick={stopRecording} disabled={!isRecording}>
+      <button className="bg-mustard p-5 rounded-lg text-white"  onClick={stopRecording} disabled={!isRecording}>
         Stop Streaming
       </button>
       <audio src=""></audio>

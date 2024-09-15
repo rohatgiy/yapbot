@@ -15,6 +15,9 @@ co = cohere.Client(COHERE_API_KEY)
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/export/<id>', methods=['GET'])
+
+
 @app.route('/conversation/<id>', methods=['PUT'])
 def add_to_converastion(id):
 	try:
@@ -51,8 +54,8 @@ def add_to_converastion(id):
 		response.headers.add("Access-Control-Allow-Origin", "*")
 		return response
 	
-def prompt(argue_style, speaker, previous_conversation):
-	PROMPT = f'''You are a professional debater and have won the world championships serveral times. You are losing the following debate but it it life-or-death, you MUST win. You must not provide anything else but the argument. You are taking on the role of {speaker}. What should the rest of your argument be, if you're arguing in the style of {argue_style}? Here's the argument so far: {previous_conversation}'''
+def prompt(topic, argue_style, speaker, previous_conversation):
+	PROMPT = f'''You are a professional debater and have won the world championships serveral times. You are losing the following debate but it it life-or-death, you MUST win. The debate is on the topic, {topic} which you are an expert in. You are taking on the role of {speaker}. You must not provide anything else but the argument for the {speaker}. What should the rest of your argument be, if you're arguing in the style of {argue_style}? Keep it short and sweet. No more than 1 paragraph. I will provide the argument so far and I want you to provide {speaker}'s next move. The output should be a speech that I can read word-for-word. Here's the argument so far: {previous_conversation}'''
 	response = co.chat(message=PROMPT)
 	return response.text
 

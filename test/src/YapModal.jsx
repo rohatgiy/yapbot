@@ -30,7 +30,7 @@ const YapModal = ({idRef}) => {
         contentLabel="Example Modal"
       >
         
-        <div className={`font-Inria flex flex-col h-full`}>
+        <div className={`flex flex-col h-full`}>
           <div className="flex flex-row justify-between">
             <h2 className="text-6xl">{randomTitle[(Math.floor(Math.random() * randomTitle.length))]}</h2>
             <button onClick={closeModal} className="float-right"><IoMdClose className="w-12 h-12"/></button>

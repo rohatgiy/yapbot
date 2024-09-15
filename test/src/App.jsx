@@ -8,44 +8,7 @@ import YapModal from "./YapModal.jsx";
 export const MessageContext = createContext();
 
 function App() {
-  const [messages, setMessages] = useState([
-    { sender: "Yash", text: "Message 1" },
-    { sender: "user", text: "Message 2" },
-    { sender: "Yash", text: "Message 3" },
-    { sender: "Yash", text: "Message 4" },
-    { sender: "Yash", text: "Message 5" },
-    { sender: "user", text: "Message 6" },
-    { sender: "user", text: "Message 7" },
-    { sender: "Yash", text: "Message 8" },
-    { sender: "user", text: "Message 9" },
-    { sender: "Yash", text: "Message 1" },
-    { sender: "user", text: "Message 2" },
-    { sender: "Yash", text: "Message 3" },
-    { sender: "Yash", text: "Message 4" },
-    { sender: "Yash", text: "Message 5" },
-    { sender: "user", text: "Message 6" },
-    { sender: "user", text: "Message 7" },
-    { sender: "Yash", text: "Message 8" },
-    { sender: "user", text: "Message 9" },
-    { sender: "Yash", text: "Message 1" },
-    { sender: "user", text: "Message 2" },
-    { sender: "Yash", text: "Message 3" },
-    { sender: "Yash", text: "Message 4" },
-    { sender: "Yash", text: "Message 5" },
-    { sender: "user", text: "Message 6" },
-    { sender: "user", text: "Message 7" },
-    { sender: "Yash", text: "Message 8" },
-    { sender: "user", text: "Message 9" },
-    { sender: "Yash", text: "Message 1" },
-    { sender: "user", text: "Message 2" },
-    { sender: "Yash", text: "Message 3" },
-    { sender: "Yash", text: "Message 4" },
-    { sender: "Yash", text: "Message 5" },
-    { sender: "user", text: "Message 6" },
-    { sender: "user", text: "Message 7" },
-    { sender: "Yash", text: "Message 8" },
-    { sender: "user", text: "Message 9" },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [myTurn, setMyTurn] = useState(false);
 
   const [yapMessage, setYapMessage] = useState("");
@@ -68,27 +31,27 @@ function App() {
   };
 
   return (
-    <MessageContext.Provider
-      value={{
-        messages,
-        addMessage,
-        myTurn,
-        toggleMyTurn,
-        modalIsOpen,
-        openModal,
-        closeModal,
-		    yapMessage,
-		    setYapMessage
-      }}
-    >
-      <div className="flex flex-col h-[100dvh] font-Inria">
-        <Navbar />
-        {/* <Landing /> */}
-        <Chat />
-        <YapModal />
-        <Footer />
-      </div>
-    </MessageContext.Provider>
+      <MessageContext.Provider
+        value={{
+          messages,
+          addMessage,
+          myTurn,
+          toggleMyTurn,
+          modalIsOpen,
+          openModal,
+          closeModal,
+              yapMessage,
+              setYapMessage
+        }}
+      >
+        <div className="flex flex-col h-[100dvh]">
+          <Navbar />
+          {/* <Landing /> */}
+          <Chat />
+          <YapModal />
+          <Footer />
+        </div>
+      </MessageContext.Provider>
   );
 }
 

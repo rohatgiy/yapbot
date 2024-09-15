@@ -7,8 +7,8 @@ function Chat({ messages }) {
 				<div
 					className={`mb-2 p-2 rounded-xl max-w-[80%] ${
 					message.sender === 'user'
-						? 'bg-blue-500 text-white self-end justify-end text-wrap overflow-auto'
-						: 'bg-gray-200 text-black self-start justify-start text-wrap overflow-auto'
+						? 'bg-green-500 text-white self-end justify-end text-wrap overflow-auto'
+						: 'bg-gray-300 text-black self-start justify-start text-wrap overflow-auto'
 					}`}
 				>
 					{message.text}

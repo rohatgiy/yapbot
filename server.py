@@ -55,7 +55,7 @@ def add_to_converastion(id):
 		return response
 	
 def prompt(topic, argue_style, speaker, previous_conversation):
-	PROMPT = f'''You are a professional debater and have won the world championships serveral times. You are losing the following debate but it it life-or-death, you MUST win. The debate is on the topic, {topic} which you are an expert in. You are taking on the role of {speaker}. You must not provide anything else but the argument for the {speaker}. What should the rest of your argument be, if you're arguing in the style of {argue_style}? Keep it short and sweet. No more than 1 paragraph. I will provide the argument so far and I want you to provide {speaker}'s next move. The output should be a speech that I can read word-for-word. Here's the argument so far: {previous_conversation}'''
+	PROMPT = f'''You are a professional debater and have won the world championships serveral times. The debate is on the topic, {topic} which you are an expert in. You are taking on the role of {speaker}. You must not provide anything else but the argument for the {speaker}. What should the rest of your argument be, if you're arguing in the style of {argue_style}? Keep it short and sweet. No more than 1 paragraph. I will provide the argument so far and I want you to provide {speaker}'s next move. The output should be a speech that I can read word-for-word. Here's the argument so far: {previous_conversation}'''
 	response = co.chat(message=PROMPT)
 	return response.text
 
@@ -66,6 +66,7 @@ def argue(id):
 		data = request.json
 		speaker = data['speaker']
 		style = data['style']
+		topic = data['topic']
 		conversation = ''
 		if redis_client.exists(id):
 			conversation = redis_client.get(id).decode('utf-8')
@@ -73,7 +74,7 @@ def argue(id):
 		else:
 			return jsonify({'error': 'Conversation not found'}), 404
 		
-		argument = prompt(style, speaker, context)
+		argument = prompt(topic, style, speaker, context)
 		
 		return jsonify({'arguement': argument}), 200
 

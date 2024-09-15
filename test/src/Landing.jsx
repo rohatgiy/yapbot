@@ -16,7 +16,7 @@ export default function Component() {
           <span className=" font-extrabold">YapBot</span> is your personal AI debate coach. Do you suck at arguing? Do you have that one friend that you never seem to win an argument against? Don’t fear, YapBot is here!
           </p>
           <p className="text-xl mb-8">Ready, set, YAP!</p>
-          <a href="/yap">
+          <a href="/profile">
             <button className="bg-blue-900 hover:bg-blue-900 text-white px-16 py-4 rounded-full my-4">
               <div className="flex">
                   Get Started

@@ -7,10 +7,11 @@ import YapModal from "./YapModal.jsx";
 
 export const MessageContext = createContext();
 
-function App() {
+export function MessageContextProvider({ children }) {
   const [messages, setMessages] = useState([]);
   const [myTurn, setMyTurn] = useState(false);
-
+  const [selectedStyle, setSelectedStyle] = useState("");
+  const [givenTopic, setGivenTopic] = useState("");
   const [yapMessage, setYapMessage] = useState("");
 
   const toggleMyTurn = () => {
@@ -30,20 +31,31 @@ function App() {
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
+  return <MessageContext.Provider
+  value={{
+    messages,
+    addMessage,
+    myTurn,
+    toggleMyTurn,
+    modalIsOpen,
+    openModal,
+    closeModal,
+    yapMessage,
+    setYapMessage,
+    selectedStyle, 
+    setSelectedStyle,
+    givenTopic, 
+    setGivenTopic
+  }}
+>{children}</MessageContext.Provider>
+}
+
+
+function App() {
+ 
+
   return (
-      <MessageContext.Provider
-        value={{
-          messages,
-          addMessage,
-          myTurn,
-          toggleMyTurn,
-          modalIsOpen,
-          openModal,
-          closeModal,
-              yapMessage,
-              setYapMessage
-        }}
-      >
+    
         <div className="flex flex-col h-[100dvh]">
           <Navbar />
           {/* <Landing /> */}
@@ -51,7 +63,7 @@ function App() {
           <YapModal />
           <Footer />
         </div>
-      </MessageContext.Provider>
+    
   );
 }
 

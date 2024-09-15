@@ -8,7 +8,10 @@ import { MessageContext } from "./App";
 function Footer() {
   const conversationId = useRef(null);
   const [loading, setLoading] = useState(false);
-  const { openModal, setYapMessage, messages } = useContext(MessageContext);
+  const { openModal, setYapMessage, messages, givenTopic, selectedStyle } = useContext(MessageContext);
+  
+  console.log(givenTopic);
+  console.log(selectedStyle);
 
   useEffect(() => {
     if (conversationId.current === null) {
@@ -16,6 +19,7 @@ function Footer() {
     }
   });
   const onYap = async () => {
+    
     setLoading(true);
     const response = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/argue/${conversationId.current}`,
@@ -26,7 +30,8 @@ function Footer() {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          style: "formal debate setting",
+          topic: givenTopic,
+          style: selectedStyle,
           speaker: "User",
         }),
       }
@@ -34,6 +39,9 @@ function Footer() {
     const data = await response.json();
     setLoading(false);
     openModal();
+    if(data.arguement.toLowerCase().startsWith('user: ')) {
+      data.arguement = data.arguement.slice(6);
+    }
     setYapMessage((state) => data.arguement);
     console.log(data.arguement);
   };

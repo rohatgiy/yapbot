@@ -22,16 +22,18 @@ function Navbar() {
   }
   return (
     <nav className="bg-navy-blue p-4">
-      <div className="container flex justify-start items-center">
-        <div className="flex flex-row gap-2 items-center">
-          <img
-            style={{ width: "40px", height: "40px" }}
-            src="/logo.png"
-            alt="YapBot Logo"
-          />
-          <a href="/" className="text-cream text-lg font-semibold">
-            YapBot
-          </a>
+      <div className=" flex justify-start items-center">
+        <div className="flex flex-row gap-2 items-center justify-between w-full">
+          <div className="flex flex-row">
+            <img
+              style={{ width: "40px", height: "40px" }}
+              src="/logo.png"
+              alt="YapBot Logo"
+            />
+            <a href="/" className="text-cream text-lg font-semibold my-auto ml-4">
+              YapBot
+            </a>
+          </div>
           <button
             className="flex flex-row gap-3 rounded-lg text-white font-bold text-l hover:opacity-80 ease-in-out duration-300"
             onClick={exportTranscript}

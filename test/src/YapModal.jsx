@@ -36,7 +36,7 @@ const YapModal = ({idRef}) => {
             <button onClick={closeModal} className="float-right"><IoMdClose className="w-12 h-12"/></button>
           </div>
           <div
-              className={`rounded-xl my-10 text-navy-blue text-5xl text-wrap overflow-auto justify-start flex-grow`}
+              className={`rounded-xl my-10 text-navy-blue text-5xl text-wrap overflow-auto justify-start flex-grow leading-normal`}
             >
               <Typewriter options={{  delay: 2, }}
                 onInit={(typewriter) => {
@@ -45,7 +45,7 @@ const YapModal = ({idRef}) => {
                   .start();
                 }}/>
           </div>
-          <div className="flex flex-row text-xl justify-between gap-10 align-baseline float-end">
+          <div className="flex flex-row text-3xl justify-between gap-10 align-baseline float-end text-white">
             <button className="bg-green-400 p-4 rounded-lg flex-1" onClick={onAccept}>Accept</button>
             <button onClick={closeModal} className="bg-red-400 p-4 rounded-lg flex-1">Reject</button>
           </div>

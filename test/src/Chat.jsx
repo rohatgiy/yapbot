@@ -1,4 +1,8 @@
-function Chat({ messages }) {
+import { MessageContext } from "./App";
+import { useContext } from "react";
+
+function Chat() {
+	const { messages } = useContext(MessageContext);
   return (
       <div className="h-screen flex-col overflow-y-auto bg-cream p-4 rounded-md mb-4">
         {/* Render each message */}

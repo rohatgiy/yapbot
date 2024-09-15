@@ -5,7 +5,7 @@ export default function Component() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100">
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <img src="public/logo.png" alt="" className="w-16 h-16"/>
+          <img src="/logo.png" alt="" className="w-16 h-16"/>
           <span className="text-xl font-semibold">YapBot</span>
         </div>
       </header>
@@ -27,9 +27,9 @@ export default function Component() {
         </div>
         <div className="md:w-1/2">
         <img
-                  src="public/hero_landing_cropped.png"
+                  src="/hero_landing_cropped.png"
                   alt="Nutrient tracker interface"
-                  className=" justify-end h-auto rounded-xl"
+                  className=" justify-end h-auto rounded-xl max-h-[80vh]"
                 />
         </div>
       </main>

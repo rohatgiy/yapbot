@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./test
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80" # Maps container port 80 to host port 5173
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Maps container port 8000 to host port 8000
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6739:6379" # Maps container port 6379 to host port 6739
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,19 +1,16 @@
-// src/AudioStreamer.js
-import React, { useState, useRef } from "react";
-import env from "react-dotenv";
+import { useState, useRef } from "react";
 
-const AudioStreamer = () => {
+const AudioStreamer = ({idRef}) => {
   const [isRecording, setIsRecording] = useState(false);
-  const [data, setData] = useState(null);
   const mediaRecorderRef = useRef(null);
   const socketRef = useRef(null);
+  console.log('idRef', idRef);
 
   const startStreaming = () => {
-    console.log(env);
     // Open a WebSocket connection
     socketRef.current = new WebSocket(
       "wss://api.deepgram.com/v1/listen?punctuate=true&smart_format=true",
-      ["token", "c268818ea28c1ac34c20a131e4a5ca270b81dba2"]
+      ["token", import.meta.env.VITE_DEEPGRAM_API_KEY]
     );
 
     socketRef.current.onopen = () => {
@@ -24,14 +21,38 @@ const AudioStreamer = () => {
       console.error("WebSocket Error: ", error);
     };
 
-    socketRef.current.onclose = () => {
+    socketRef.current.onclose = async () => {
+		if (idRef.current === null) {
+			console.error("Conversation ID is null");
+			return;
+		}
+		await fetch(`${import.meta.env.VITE_SERVER_URL}/conversation/${idRef.current}`, {
+			method: 'PUT',
+			body: JSON.stringify({ message: '#' }),
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+		});
       console.log("WebSocket connection closed");
     };
 
-    socketRef.current.onmessage = (message) => {
+    socketRef.current.onmessage = async (message) => {
       const received = JSON.parse(message.data);
+	  console.log("Message from server ", JSON.parse(message.data));
+	  if (idRef.current === null) {
+		console.error("Conversation ID is null");
+		return;
+	  }
       const transcript = received.channel.alternatives[0].transcript;
-      console.log("Message from server ", JSON.parse(message.data));
+		await fetch(`${import.meta.env.VITE_SERVER_URL}/conversation/${idRef.current}`, {
+			method: 'PUT',
+			body: JSON.stringify({ message: transcript }),
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+		});
     };
   };
 
@@ -77,11 +98,8 @@ const AudioStreamer = () => {
 
   return (
     <div>
-      <button className="bg-mustard p-5 rounded-lg text-white" onClick={handleStart} disabled={isRecording}>
-        Start Streaming
-      </button>
-      <button className="bg-mustard p-5 rounded-lg text-white"  onClick={stopRecording} disabled={!isRecording}>
-        Stop Streaming
+      <button className="bg-mustard p-5 rounded-lg text-white" onClick={() => !isRecording ? handleStart() : stopRecording()}>
+        {!isRecording ? 'Start Streaming' : 'Stop Streaming'}
       </button>
       <audio src=""></audio>
     </div>

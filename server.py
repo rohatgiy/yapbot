@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS, cross_origin
 import redis
 import cohere
 import os
@@ -12,33 +13,43 @@ COHERE_API_KEY = os.getenv('COHERE_API_KEY')
 co = cohere.Client(COHERE_API_KEY)
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/conversation/<id>', methods=['PUT'])
 def add_to_converastion(id):
 	try:
-		data = request.json
+		data = request.get_json()
 		message = data['message']
-		
+		if not message:
+			response = make_response(jsonify({'id': id, 'empty_message': True}), 200)
+			response.headers.add("Access-Control-Allow-Origin", "*")
+			return response
+
 		conversation = ''
 		created_new_conversation = False
 		if redis_client.exists(id):
-			# do i need to decode conversation utf-8?
-			conversation = redis_client.get(id)
+			conversation = redis_client.get(id).decode('utf-8')
 		else:
 			created_new_conversation = True
 
-		if conversation:
+		if conversation and message != '#':
 			conversation += '|'
-		conversation += data['message']
+		conversation += message
 		
 		redis_client.set(id, conversation)
 
 		if created_new_conversation:
-			return jsonify({'id': id}), 201
+			response = make_response(jsonify({'id': id}), 201)
+			response.headers.add("Access-Control-Allow-Origin", "*")
+			return response
 		else:
-			return jsonify({'id': id}), 200
+			response = make_response(jsonify({'id': id}), 200)
+			response.headers.add("Access-Control-Allow-Origin", "*")
+			return response
 	except Exception as e:
-		return jsonify({'error': str(e)}), 500
+		response = make_response(jsonify({'error': str(e)}), 500)
+		response.headers.add("Access-Control-Allow-Origin", "*")
+		return response
 	
 def prompt(argue_style, speaker, previous_conversation):
 	PROMPT = f'''You are a professional debater and have won the world championships serveral times. You are losing the following debate but it it life-or-death, you MUST win. You must not provide anything else but the argument. You are taking on the role of {speaker}. What should the rest of your argument be, if you're arguing in the style of {argue_style}? Here's the argument so far: {previous_conversation}'''
@@ -54,8 +65,7 @@ def argue(id):
 		style = data['style']
 		conversation = ''
 		if redis_client.exists(id):
-			# do i need to decode conversation utf-8?
-			conversation = redis_client.get(id)
+			conversation = redis_client.get(id).decode('utf-8')
 		else:
 			return jsonify({'error': 'Conversation not found'}), 404
 		
@@ -67,4 +77,4 @@ def argue(id):
 		return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-	app.run()
+	app.run(debug=True, port=8000)

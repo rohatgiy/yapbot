@@ -1,12 +1,14 @@
-import Footer from "./Footer";
-import Chat from "./Chat";
+import Footer from "./Footer.jsx";
+import Chat from "./Chat.jsx";
 import Navbar from "./Navbar.jsx";
+import Landing from "./Landing.jsx";
 
 function App() {
 return (
-	<div className="flex flex-col h-screen">
+	<div className="flex flex-col h-screen font-Inria">
 		<Navbar />
-		<Chat messages={[{sender: 'Yash', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'user', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'Yash', text: 'hi' }]}/>
+		<Landing />
+		{/* <Chat messages={[{sender: 'Yash', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'user', text: 'hiqwertyuioxdvyfcdabskufgabdiuyfgouydsbfgukabdsuhfgdahkubfjsbfubsadufbyusadbfyuoasdbyfubasdkufbuhsdabfuyasbdiufbsaiufbusadbf' }, {sender: 'Yash', text: 'hi' }]}/> */}
 		<Footer />
 	</div>
 );

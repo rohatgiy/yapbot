@@ -6,6 +6,10 @@ export default {
 	  ],
   theme: {
     extend: {
+		fontFamily: {
+			poppins: ['Poppins', 'sans-serif'],
+			Inria: ['Inria Sans', 'serif']
+		},
 		colors: {
 			'dark-green': '#264653',
 			'forest-green': '#2a9d8f',
@@ -16,4 +20,3 @@ export default {
   },
   plugins: [],
 }
-

@@ -8,7 +8,7 @@ import { MessageContext } from "./App";
 function Footer() {
   const conversationId = useRef(null);
   const [loading, setLoading] = useState(false);
-  const { openModal } = useContext(MessageContext);
+  const { openModal, setYapMessage } = useContext(MessageContext);
 
   useEffect(() => {
     if (conversationId.current === null) {
@@ -34,13 +34,14 @@ function Footer() {
     const data = await response.json();
     setLoading(false);
     openModal();
-    console.log(data);
+    setYapMessage((state) => data.arguement);
+    console.log(data.arguement);
   };
 
   console.log("conversationId", conversationId.current);
   return (
     <>
-      <YapModal />
+      <YapModal idRef = {conversationId}/>
       <footer className="bg-navy-blue flex flex-row items-center align-items-center justify-around sticky top-[calc(100dvh)] p-4">
         <AudioStreamer idRef={conversationId} user={"Opponent"} />
         <button

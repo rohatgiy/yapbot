@@ -4,7 +4,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-green-100">
       <div className="text-center space-y-6">
-        <div className="w-40 h-40 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
+        <div className="w-40 h-40 bg-navy-blue rounded-full flex items-center justify-center mx-auto mb-8">
           <div className="flex space-x-1 text-6xl">
             {/* {[...Array(3)].map((_, i) => (
               <div key={i} className="w-2 h-2 bg-white rounded-full" />

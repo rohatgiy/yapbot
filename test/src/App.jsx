@@ -48,6 +48,8 @@ function App() {
   ]);
   const [myTurn, setMyTurn] = useState(false);
 
+  const [yapMessage, setYapMessage] = useState("");
+
   const toggleMyTurn = () => {
     setMyTurn((prevMyTurn) => !prevMyTurn);
   };
@@ -75,6 +77,8 @@ function App() {
         modalIsOpen,
         openModal,
         closeModal,
+		    yapMessage,
+		    setYapMessage
       }}
     >
       <div className="flex flex-col h-[100dvh] font-Inria">

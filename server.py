@@ -66,15 +66,42 @@ def argue(id):
 		conversation = ''
 		if redis_client.exists(id):
 			conversation = redis_client.get(id).decode('utf-8')
+			context = parse_context(conversation)
 		else:
 			return jsonify({'error': 'Conversation not found'}), 404
 		
-		argument = prompt(style, speaker, conversation)
+		argument = prompt(style, speaker, context)
 		
 		return jsonify({'arguement': argument}), 200
 
 	except Exception as e:
 		return jsonify({'error': str(e)}), 500
+
+
+def parse_context(conversation: str) :
+	conversation = conversation.replace("|"," ")
+	arr = conversation.split("#")
+	even = True
+	user = []
+	opp = []
+	for i in arr:
+		if (even):
+			opp.append(i)
+		else:
+			user.append(i)
+		even = not even
+	context = ""
+	i = 0
+	while i < max(len(opp), len(user)):
+		if (i < len(opp)):
+			context += "Opponent: " + opp[i] + "\n"
+		if (i < len(user)):
+			context += "User: " + opp[i] + "\n"
+		i+= 1
+	return context
+	
+	
+
 
 if __name__ == '__main__':
 	app.run(debug=True, port=8000)
